@@ -25,54 +25,56 @@ import (
 	"time"
 )
 
+// init 函数在程序启动时初始化随机数生成器。
 func init() {
-	seed := time.Now().Unix()
-	fmt.Println(seed)
-	rand.Seed(seed)
+	seed := time.Now().Unix() // 使用当前时间作为随机数种子
+	fmt.Println(seed)         // 打印种子值
+	rand.Seed(seed)           // 初始化随机数生成器
 }
 
-// perm returns a random permutation of n Int items in the range [0, n).
+// perm 函数返回一个随机排列的 n 个 Int 类型的 Item，范围是 [0, n)。
 func perm(n int) (out []Item) {
 	for _, v := range rand.Perm(n) {
-		out = append(out, Int(v))
+		out = append(out, Int(v)) // 将随机排列的整数转换为 Item 并添加到切片中
 	}
 	return
 }
 
-// rang returns an ordered list of Int items in the range [0, n).
+// rang 函数返回一个有序的 Int 类型的 Item 列表，范围是 [0, n)。
 func rang(n int) (out []Item) {
 	for i := 0; i < n; i++ {
-		out = append(out, Int(i))
+		out = append(out, Int(i)) // 将整数转换为 Item 并添加到切片中
 	}
 	return
 }
 
-// all extracts all items from a tree in order as a slice.
+// all 函数从树中按顺序提取所有项作为切片。
 func all(t *BTree) (out []Item) {
 	t.Ascend(func(a Item) bool {
-		out = append(out, a)
-		return true
+		out = append(out, a) // 将每个 Item 添加到切片中
+		return true          // 继续迭代
 	})
 	return
 }
 
-// rangerev returns a reversed ordered list of Int items in the range [0, n).
+// rangrev 函数返回一个逆序的 Int 类型的 Item 列表，范围是 [0, n)。
 func rangrev(n int) (out []Item) {
 	for i := n - 1; i >= 0; i-- {
-		out = append(out, Int(i))
+		out = append(out, Int(i)) // 将整数从大到小转换为 Item 并添加到切片中
 	}
 	return
 }
 
-// allrev extracts all items from a tree in reverse order as a slice.
+// allrev 函数从树中以逆序提取所有项作为切片。
 func allrev(t *BTree) (out []Item) {
 	t.Descend(func(a Item) bool {
-		out = append(out, a)
-		return true
+		out = append(out, a) // 将每个 Item 添加到切片中
+		return true          // 继续迭代
 	})
 	return
 }
 
+// btreeDegree 是一个命令行标志，用于设置 B-树的度数。
 var btreeDegree = flag.Int("degree", 32, "B-Tree degree")
 
 func TestBTree(t *testing.T) {

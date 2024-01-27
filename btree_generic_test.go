@@ -26,31 +26,50 @@ import (
 	"testing"
 )
 
+// intRange 函数生成一个整数切片，包含从 0 到 s-1 的整数。
+// s: 切片的长度
+// reverse: 是否反向生成切片
 func intRange(s int, reverse bool) []int {
+	// 创建一个长度为 s 的整数切片
 	out := make([]int, s)
+
+	// 循环，从 0 到 s-1
 	for i := 0; i < s; i++ {
 		v := i
+		// 如果 reverse 为 true，则将 v 设置为反向的值
 		if reverse {
 			v = s - i - 1
 		}
+		// 将 v 的值赋给 out 切片的相应位置
 		out[i] = v
 	}
+	// 返回生成的切片
 	return out
 }
 
+// intAll 函数遍历 BTreeG 中的所有整数，并按升序返回它们。
+// t: *BTreeG[int] 类型，表示一棵整数类型的二叉树
 func intAll(t *BTreeG[int]) (out []int) {
+	// 使用 Ascend 方法升序遍历二叉树
 	t.Ascend(func(a int) bool {
+		// 将每个元素追加到 out 切片中
 		out = append(out, a)
 		return true
 	})
+	// 返回包含所有元素的切片
 	return
 }
 
+// intAllRev 函数遍历 BTreeG 中的所有整数，并按降序返回它们。
+// t: *BTreeG[int] 类型，表示一棵整数类型的二叉树
 func intAllRev(t *BTreeG[int]) (out []int) {
+	// 使用 Descend 方法降序遍历二叉树
 	t.Descend(func(a int) bool {
+		// 将每个元素追加到 out 切片中
 		out = append(out, a)
 		return true
 	})
+	// 返回包含所有元素的切片
 	return
 }
 
